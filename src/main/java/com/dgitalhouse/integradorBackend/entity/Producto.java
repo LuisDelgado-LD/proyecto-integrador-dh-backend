@@ -2,11 +2,9 @@ package com.dgitalhouse.integradorBackend.entity;
 
 import jakarta.persistence.*;
 
+@Entity
+@Table(name = "productos")
 public class Producto {
-
-    @Entity
-    @Table(name = "productos")
-    public class Producto {
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)

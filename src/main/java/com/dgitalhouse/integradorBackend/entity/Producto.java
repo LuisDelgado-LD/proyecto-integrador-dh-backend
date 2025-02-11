@@ -13,10 +13,9 @@ public class Producto {
         private String nombre;
         @Column(length = 200, nullable = false)
         private String descripcion;
-
         @Column(length = 255, nullable = false)
         private String imagen;
-        @Column(length = 100, nullable = false)
+        @Column(nullable = false, precision = 10, scale = 2)
         private Double precioUnitario;
 
     }

@@ -16,10 +16,9 @@ public class Producto {
 
         @Column(length = 255, nullable = false)
         private String imagen;
-
         @Column(length = 100, nullable = false)
         private Double precioUnitario;
 
     }
-}
+
 

@@ -31,13 +31,19 @@ public class Reserva {
     @JoinColumn(name = "habitacion_id", nullable = false)
     private Habitacion habitacion;
 
-    @Column (nullable = false)
+    @Column (name = "fecha_creacion", nullable = false)
+    private LocalDate fechaCreacion;
+
+    @Column (name = "fecha_entrada", nullable = false)
     private LocalDate fechaEntrada;
 
-    @Column (nullable = false)
+    @Column (name = "fecha_salida", nullable = false)
     private LocalDate fechaSalida;
 
-    @Column (nullable = false)
+    @Column (name = "precio_total", nullable = false)
+    private double precioTotal;
+
+    @Column (name = "estado", nullable = false)
     private EstadoReserva estado;
 
 }

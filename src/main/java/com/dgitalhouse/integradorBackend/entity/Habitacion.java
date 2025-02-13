@@ -1,35 +1,55 @@
 package com.dgitalhouse.integradorBackend.entity;
 
+import com.dgitalhouse.integradorBackend.DTO.entrada.HabitacionEntradaDto;
+import com.dgitalhouse.integradorBackend.DTO.salida.HabitacionSalidaDto;
 import com.dgitalhouse.integradorBackend.entity.enums.TamanoHabitacion;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import lombok.*;
+
+import java.util.List;
 
 
 @Entity
 @Table(name = "habitaciones")
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 public class Habitacion {
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
-        @Column(length = 100, nullable = false)
+
+        @Column(length = 100, nullable = false, unique = true)
         private String nombre;
+
         @Column(length = 200, nullable = false)
         private String descripcion;
-        @Column(length = 255, nullable = false)
-        private String imagen;
+
+        @OneToMany(mappedBy = "habitacion")
+        private List<Imagen> imagenes;
+
         @Column(length = 30, nullable = false)
         private TamanoHabitacion tamano;
+
         @Column(nullable = false)
-        private Boolean disponible = true;
+        private Boolean isDisponible;
+
         @Column(nullable = false, precision = 10)
         private Double precioUnitario;
 
 
+        public Habitacion(HabitacionEntradaDto habitacionEntradaDto) {
+                this.nombre = habitacionEntradaDto.nombre();
+                this.descripcion = habitacionEntradaDto.descripcion();
+                this.tamano = habitacionEntradaDto.tamano();
+                this.isDisponible = habitacionEntradaDto.isDisponible();
+                this.precioUnitario = habitacionEntradaDto.precioUnitario();
+        }
 }
 
 

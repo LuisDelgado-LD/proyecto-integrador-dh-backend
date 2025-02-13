@@ -1,10 +1,17 @@
 package com.dgitalhouse.integradorBackend.entity;
 
+import com.dgitalhouse.integradorBackend.entity.enums.TamanoHabitacion;
 import jakarta.persistence.*;
 
+import lombok.*;
+
+
 @Entity
-@Table(name = "productos")
-public class Producto {
+@Table(name = "habitaciones")
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+public class Habitacion {
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,9 +22,15 @@ public class Producto {
         private String descripcion;
         @Column(length = 255, nullable = false)
         private String imagen;
-        @Column(nullable = false, precision = 10, scale = 2)
+        @Column(length = 30, nullable = false)
+        private TamanoHabitacion tamano;
+        @Column(nullable = false)
+        private Boolean disponible = true;
+        @Column(nullable = false, precision = 10)
         private Double precioUnitario;
 
-    }
+
+           }
+
 
 

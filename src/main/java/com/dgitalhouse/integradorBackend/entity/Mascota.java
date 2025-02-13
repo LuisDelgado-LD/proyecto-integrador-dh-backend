@@ -2,14 +2,13 @@ package com.dgitalhouse.integradorBackend.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.GeneratorType;
 
 @Entity
-@Table(name = "clientes")
+@Table (name = "mascotas")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Cliente {
+public class Mascota {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,12 +16,15 @@ public class Cliente {
     @Column(length = 30, nullable = false)
     private String nombre;
     @Column(length = 30, nullable = false)
-    private String apellido;
-    @Column(length = 60, nullable = false)
-    private String email;
+    private String raza;
     @Column(length = 30, nullable = false)
-    private String telefono;
+    private String tamano;
     @Column(length = 30, nullable = false)
-    private String direccion;
+    private int edad;
+
+    @ManyToOne
+    @JoinColumn(name = "cliente_id", nullable = false)
+    //@Column(name = "cliente_id", nullable = false)
+    private Cliente cliente;
 
 }

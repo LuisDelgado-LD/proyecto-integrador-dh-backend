@@ -30,7 +30,7 @@ public class Habitacion {
         private Double precioUnitario;
 
 
-           }
+}
 
 
 

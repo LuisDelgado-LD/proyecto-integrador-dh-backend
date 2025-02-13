@@ -24,7 +24,7 @@ public class Mascota {
 
     @ManyToOne
     @JoinColumn(name = "cliente_id", nullable = false)
-    //@Column(name = "cliente_id", nullable = false)
-    private Cliente cliente;
+
+    private Usuario usuario;
 
 }

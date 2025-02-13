@@ -21,7 +21,7 @@ public class Reserva {
 
     @ManyToOne
     @JoinColumn(name = "cliente_id", nullable = false)
-    private Cliente cliente;
+    private Usuario usuario;
 
     @ManyToOne
     @JoinColumn(name = "mascota_id", nullable = false)
@@ -33,8 +33,10 @@ public class Reserva {
 
     @Column (nullable = false)
     private LocalDate fechaEntrada;
+
     @Column (nullable = false)
     private LocalDate fechaSalida;
+
     @Column (nullable = false)
     private EstadoReserva estado;
 

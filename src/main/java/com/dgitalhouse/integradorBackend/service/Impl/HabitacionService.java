@@ -5,6 +5,7 @@ import com.dgitalhouse.integradorBackend.DTO.salida.HabitacionSalidaDto;
 import com.dgitalhouse.integradorBackend.entity.Habitacion;
 import com.dgitalhouse.integradorBackend.repository.HabitacionRepository;
 import com.dgitalhouse.integradorBackend.service.IHabitacionService;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -23,8 +24,13 @@ public class HabitacionService implements IHabitacionService {
     @Override
     public ResponseEntity<HabitacionSalidaDto> registrarHabitacion(HabitacionEntradaDto habitacionEntradaDto, UriComponentsBuilder uriComponentsBuilder) {
         Habitacion habitacion = new Habitacion(habitacionEntradaDto);
-        HabitacionSalidaDto habitacionSalidaDto = new HabitacionSalidaDto(habitacionRepository.save(habitacion));
-        return ResponseEntity.created(uriComponentsBuilder.path("/habitaciones/{id}").buildAndExpand(habitacionSalidaDto.id()).toUri()).body(habitacionSalidaDto);
+        try{
+            HabitacionSalidaDto habitacionSalidaDto = new HabitacionSalidaDto(habitacionRepository.save(habitacion));
+            return ResponseEntity.created(uriComponentsBuilder.path("/habitaciones/{id}").buildAndExpand(habitacionSalidaDto.id()).toUri()).body(habitacionSalidaDto);
+        } catch (DataIntegrityViolationException ex) {
+            throw new DataIntegrityViolationException("El nombre ya está en uso");
+
+        }
     }
 
     @Override

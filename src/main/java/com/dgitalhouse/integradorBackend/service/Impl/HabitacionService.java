@@ -7,10 +7,15 @@ import com.dgitalhouse.integradorBackend.repository.HabitacionRepository;
 import com.dgitalhouse.integradorBackend.service.IHabitacionService;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.data.domain.Pageable;
+
+import java.util.List;
+import java.util.Random;
 
 @Service
 public class HabitacionService implements IHabitacionService {
@@ -35,7 +40,8 @@ public class HabitacionService implements IHabitacionService {
 
     @Override
     public ResponseEntity<Page<HabitacionSalidaDto>> listar(Pageable pagination) {
-        return ResponseEntity.ok(habitacionRepository.findAll(pagination).map(HabitacionSalidaDto::new));
+        int indiceAleatorio = new Random().nextInt((int)habitacionRepository.count());
+        return ResponseEntity.ok((habitacionRepository.findAll(PageRequest.of(indiceAleatorio, pagination.getPageSize(), Sort.unsorted()))).map(HabitacionSalidaDto::new));
     }
 
     @Override

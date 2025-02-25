@@ -53,8 +53,12 @@ FROM package as extract
 WORKDIR /build
 
 RUN java -Djarmode=layertools -jar target/app.jar extract --destination target/extracted
-#RUN find / -name application.properties 2>/dev/null
-RUN sed -i 's/jdbc:mysql:\/\/localhost/jdbc:mysql:\/\/database/g' /build/target/extracted/application/BOOT-INF/classes/application.properties
+RUN ls -la /build/target/extracted
+RUN sed -i 's/spring.datasource.url=.*/spring.datasource.url=jdbc:mysql:\/\/database\/pet_paradise/g' /build/target/extracted/application/BOOT-INF/classes/application.properties && \
+        sed -i 's/spring.datasource.username=.*/spring.datasource.username=My_own_USER/g' /build/target/extracted/application/BOOT-INF/classes/application.properties && \
+        sed -i 's/spring.datasource.password=.*/spring.datasource.password=ds8adskjl21edas9/g' /build/target/extracted/application/BOOT-INF/classes/application.properties
+
+
 
 ################################################################################
 
@@ -76,7 +80,7 @@ ARG UID=10001
 RUN adduser \
     --disabled-password \
     --gecos "" \
-    --home "/nonexistent" \
+#    --home "/nonexistent" \
     --shell "/sbin/nologin" \
     --no-create-home \
     --uid "${UID}" \
@@ -88,8 +92,6 @@ COPY --from=extract build/target/extracted/dependencies/ ./
 COPY --from=extract build/target/extracted/spring-boot-loader/ ./
 COPY --from=extract build/target/extracted/snapshot-dependencies/ ./
 COPY --from=extract build/target/extracted/application/ ./
-#COPY ./src/main/resources/application.properties ./
-RUN cat /BOOT-INF/classes/application.properties
 
 EXPOSE 8080
 

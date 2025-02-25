@@ -5,7 +5,11 @@ import com.dgitalhouse.integradorBackend.DTO.salida.HabitacionSalidaDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import java.io.IOException;
+import java.util.List;
 
 
 public interface IHabitacionService {
@@ -21,4 +25,5 @@ public interface IHabitacionService {
     ResponseEntity<HabitacionSalidaDto> actualizarHabitacion(Long id, HabitacionEntradaDto habitacionEntradaDto);
 
     boolean eliminarHabitacion(Long id);
+
 }

@@ -3,12 +3,14 @@ package com.dgitalhouse.integradorBackend.entity;
 import com.dgitalhouse.integradorBackend.DTO.entrada.HabitacionEntradaDto;
 import com.dgitalhouse.integradorBackend.DTO.salida.HabitacionSalidaDto;
 import com.dgitalhouse.integradorBackend.entity.enums.TamanoHabitacion;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -30,8 +32,9 @@ public class Habitacion {
         @Column(length = 200, nullable = false)
         private String descripcion;
 
-        @OneToMany(mappedBy = "habitacion")
-        private List<Imagen> imagenes;
+        @OneToMany(mappedBy = "habitacion", cascade = CascadeType.ALL, orphanRemoval = true)
+        @JsonManagedReference
+        private List<Imagen> imagenes = new ArrayList<>();
 
         @Column(length = 30, nullable = false)
         private TamanoHabitacion tamano;

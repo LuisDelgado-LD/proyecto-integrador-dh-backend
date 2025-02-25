@@ -4,6 +4,5 @@ import com.dgitalhouse.integradorBackend.entity.Habitacion;
 
 public record ImagenEntradaDto(
 
-
 ) {
 }

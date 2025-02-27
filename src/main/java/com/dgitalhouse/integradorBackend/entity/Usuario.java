@@ -43,7 +43,7 @@ public class Usuario implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-    @Enumerated(EnumType.STRING)
+
     @Column(nullable = false)
     private String rol;
 

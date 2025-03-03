@@ -1,7 +1,9 @@
 package com.dgitalhouse.integradorBackend.controller;
 
+import com.dgitalhouse.integradorBackend.DTO.entrada.ImagenEntradaDto;
 import com.dgitalhouse.integradorBackend.entity.Imagen;
 import com.dgitalhouse.integradorBackend.service.IImagenService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,7 +29,7 @@ public class ImagenController {
             Imagen imagen = imagenService.uploadImage(id, file);
             return ResponseEntity.ok(Map.of("url", imagen.getUrl()));
         } catch (Exception e) {
-            return ResponseEntity.status(500).body(Map.of("Error al subir la imagen", e.getMessage() ));
+            return ResponseEntity.status(500).body(Map.of("Error al subir la imagen", e.getMessage()));
         }
     }
 
@@ -53,5 +55,15 @@ public class ImagenController {
         return ResponseEntity.ok(images);
     }
 
-
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> eliminarImagen(@PathVariable Long id) {
+        boolean eliminada = imagenService.eliminarImagen(id);
+        if (eliminada) {
+            return ResponseEntity.ok("Imagen eliminada correctamente");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Imagen no encontrada");
+        }
     }
+
+
+}

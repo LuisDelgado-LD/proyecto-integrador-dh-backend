@@ -45,6 +45,10 @@ public class Habitacion {
         @Column(nullable = false, precision = 10)
         private Double precioUnitario;
 
+        @ManyToOne
+        @JoinColumn(name = "categoria_id", nullable = true)
+        private Categoria categoria;
+
 
         public Habitacion(HabitacionEntradaDto habitacionEntradaDto) {
                 this.nombre = habitacionEntradaDto.nombre();
@@ -52,6 +56,7 @@ public class Habitacion {
                 this.tamano = habitacionEntradaDto.tamano();
                 this.isDisponible = habitacionEntradaDto.isDisponible();
                 this.precioUnitario = habitacionEntradaDto.precioUnitario();
+                this.categoria = habitacionEntradaDto.categoria();
         }
 }
 

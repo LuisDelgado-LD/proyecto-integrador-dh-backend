@@ -2,8 +2,10 @@ package com.dgitalhouse.integradorBackend.service.Impl;
 
 import com.dgitalhouse.integradorBackend.DTO.entrada.HabitacionEntradaDto;
 import com.dgitalhouse.integradorBackend.DTO.salida.HabitacionSalidaDto;
+import com.dgitalhouse.integradorBackend.entity.Categoria;
 import com.dgitalhouse.integradorBackend.entity.Habitacion;
 import com.dgitalhouse.integradorBackend.entity.Imagen;
+import com.dgitalhouse.integradorBackend.repository.CategoriaRepository;
 import com.dgitalhouse.integradorBackend.repository.HabitacionRepository;
 import com.dgitalhouse.integradorBackend.service.IHabitacionService;
 import lombok.AllArgsConstructor;
@@ -28,10 +30,16 @@ public class HabitacionService implements IHabitacionService {
     private HabitacionRepository habitacionRepository;
     @Autowired
     private CloudinaryService cloudinaryService;
+    @Autowired
+    private CategoriaRepository categoriaRepository;
 
     @Override
     public ResponseEntity<HabitacionSalidaDto> registrarHabitacion(HabitacionEntradaDto habitacionEntradaDto, UriComponentsBuilder uriComponentsBuilder) {
         Habitacion habitacion = new Habitacion(habitacionEntradaDto);
+        Categoria categoria = categoriaRepository.findById(habitacion.getCategoria().getId()).orElse(null);
+        if (categoria == null) {
+            throw new DataIntegrityViolationException("La categoría no existe");
+        }
         try {
             HabitacionSalidaDto habitacionSalidaDto = new HabitacionSalidaDto(habitacionRepository.save(habitacion));
             return ResponseEntity.created(uriComponentsBuilder.path("/habitaciones/{id}").buildAndExpand(habitacionSalidaDto.id()).toUri()).body(habitacionSalidaDto);

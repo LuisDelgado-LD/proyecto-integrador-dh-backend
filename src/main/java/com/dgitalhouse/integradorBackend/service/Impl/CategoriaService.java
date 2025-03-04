@@ -29,6 +29,12 @@ public class CategoriaService implements ICategoriaService {
     @Autowired
     private CloudinaryService cloudinaryService;
 
+    public CategoriaService(Cloudinary cloudinary) {
+        this.cloudinary = cloudinary;
+    }
+
+
+
     @Override
     public ResponseEntity<CategoriaSalidaDto> registrarCategoria(CategoriaEntradaDto categoriaEntradaDto, UriComponentsBuilder uriComponentsBuilder) {
      Categoria categoria = new Categoria(categoriaEntradaDto);

@@ -38,8 +38,19 @@ WORKDIR /build
 
 COPY ./src src/
 COPY pom.xml pom.xml
+COPY src/main/resources/application.properties.Docker src/main/resources/application.properties
 RUN ./mvnw package -DskipTests && \
     mv target/$(./mvnw help:evaluate -Dexpression=project.artifactId -q -DforceStdout)-$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout).jar target/app.jar
+
+#RUN sed -i 's/spring.datasource.url=.*/spring.datasource.url=${DB_URL}/g' src/main/resources/application.properties && \
+#        sed -i 's/spring.datasource.username=.*/spring.datasource.username=${DB_USER}/g' src/main/resources/application.properties && \
+#        sed -i 's/spring.datasource.password=.*/spring.datasource.password=${DB_PASS}/g' src/main/resources/application.properties
+
+#RUN echo -e "#Cloudinary\ncloudinary.cloud-name=${CLOUD_NAME}\ncloudinary.api-key=${CLOUD_KEY}\n\
+#cloudinary.api-secret=${CLOUD_SECRET}\n#Tamaño máximo del archivo\n\
+#spring.servlet.multipart.max-file-size=${CLOUD_MAX_FILE_SIZE}\n# Tamaño máximo de la petición (suma de todos los archivos y campos)\n\
+#spring.servlet.multipart.max-request-size=${CLOUD_MAX_REQUEST_SIZE}" >> src/main/resources/application.properties
+
 
 ################################################################################
 
@@ -53,12 +64,6 @@ FROM package as extract
 WORKDIR /build
 
 RUN java -Djarmode=layertools -jar target/app.jar extract --destination target/extracted
-RUN ls -la /build/target/extracted
-RUN sed -i 's/spring.datasource.url=.*/spring.datasource.url=jdbc:mysql:\/\/database\/pet_paradise/g' /build/target/extracted/application/BOOT-INF/classes/application.properties && \
-        sed -i 's/spring.datasource.username=.*/spring.datasource.username=My_own_USER/g' /build/target/extracted/application/BOOT-INF/classes/application.properties && \
-        sed -i 's/spring.datasource.password=.*/spring.datasource.password=ds8adskjl21edas9/g' /build/target/extracted/application/BOOT-INF/classes/application.properties
-
-
 
 ################################################################################
 
@@ -80,7 +85,6 @@ ARG UID=10001
 RUN adduser \
     --disabled-password \
     --gecos "" \
-#    --home "/nonexistent" \
     --shell "/sbin/nologin" \
     --no-create-home \
     --uid "${UID}" \

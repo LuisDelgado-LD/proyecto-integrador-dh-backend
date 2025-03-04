@@ -1,0 +1,22 @@
+#Base de datos
+spring.datasource.url=${DB_URL} #jdbc:mysql://localhost/pet_paradise
+spring.datasource.username=${DB_USER}
+spring.datasource.password=${DB_PASS}
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+
+#Cloudinary
+cloudinary.cloud-name=${CLOUD_NAME}
+cloudinary.api-key=${CLOUD_KEY}
+cloudinary.api-secret=${CLOUD_SECRET}
+
+#Tamaño máximo del archivo
+spring.servlet.multipart.enabled=true
+spring.servlet.multipart.max-file-size=10MB
+# Tamaño máximo de la petición (suma de todos los archivos y campos)
+spring.servlet.multipart.max-request-size=10MB
+
+server.tomcat.additional-allowed-methods=PATCH
+
+jwt.secret="jjdasndjnaskjdnuasdnjkndaskjndajksndkjajasfasdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsfd"

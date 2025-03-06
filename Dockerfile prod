@@ -1,0 +1,23 @@
+FROM eclipse-temurin:23-jre-noble AS final
+
+# Create a non-privileged user that the app will run under.
+# See https://docs.docker.com/go/dockerfile-user-best-practices/
+ARG UID=10001
+RUN adduser \
+    --disabled-password \
+    --gecos "" \
+    --shell "/sbin/nologin" \
+    --no-create-home \
+    --uid "${UID}" \
+    appuser
+USER appuser
+
+# Copy the executable from the "package" stage.
+COPY target/extracted/dependencies/ ./
+COPY target/extracted/spring-boot-loader/ ./
+COPY target/extracted/snapshot-dependencies/ ./
+COPY target/extracted/application/ ./
+
+EXPOSE 8080
+
+ENTRYPOINT [ "java", "org.springframework.boot.loader.launch.JarLauncher" ]

@@ -20,12 +20,12 @@ public class Reserva {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "cliente_id", nullable = false)
+    @JoinColumn(name = "Usuario_id", nullable = false)
     private Usuario usuario;
 
-    @ManyToOne
-    @JoinColumn(name = "mascota_id", nullable = false)
-    private Mascota mascota;
+    //@ManyToOne
+    //@JoinColumn(name = "mascota_id", nullable = false)
+    //private Mascota mascota;
 
     @ManyToOne
     @JoinColumn(name = "habitacion_id", nullable = false)

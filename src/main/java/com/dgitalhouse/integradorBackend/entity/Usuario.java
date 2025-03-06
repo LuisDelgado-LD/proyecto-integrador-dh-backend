@@ -1,12 +1,14 @@
 package com.dgitalhouse.integradorBackend.entity;
 
 import com.dgitalhouse.integradorBackend.entity.enums.Rol;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -46,6 +48,9 @@ public class Usuario implements UserDetails {
 
     @Column(nullable = false)
     private String rol;
+
+    @OneToMany (mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Mascota> mascotas;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

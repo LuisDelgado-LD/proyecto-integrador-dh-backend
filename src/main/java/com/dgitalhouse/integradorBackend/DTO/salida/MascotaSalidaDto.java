@@ -1,5 +1,7 @@
 package com.dgitalhouse.integradorBackend.DTO.salida;
 
+import com.dgitalhouse.integradorBackend.entity.Mascota;
+
 public record MascotaSalidaDto(
     Long id,
     String nombre,
@@ -7,4 +9,12 @@ public record MascotaSalidaDto(
     String tamano,
     int edad
 ) {
+    public MascotaSalidaDto(Mascota mascota) {
+        this(mascota.getId(),
+                mascota.getNombre(),
+                mascota.getRaza(),
+                mascota.getTamano(),
+                mascota.getEdad());
+    }
+
 }

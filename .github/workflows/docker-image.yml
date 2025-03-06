@@ -1,0 +1,62 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+# env:
+#  Dockerconfig: Dockerfile prod
+  
+jobs: 
+  BuildAndPush:
+    runs-on: ubuntu-latest
+    steps:
+    #- uses: actions/checkout@v4
+    #- name: Build the Docker image
+    #  run: docker build . --file Dockerfile --tag my-image-name:${{ github.sha }}
+
+    - name: Cache Docker images.
+      uses: ScribeMD/docker-cache@0.5.0
+      with:
+        key: docker-${{ hashFiles('Dockerfile prod') }}
+    - uses: actions/checkout@v4
+
+    - name: Create nvm cache
+      uses: actions/setup-java@v4
+      with:
+        distribution: temurin
+        java-version: 23
+        cache: 'maven'
+
+    - name: Modify content to match with prod env
+      run: mv src/main/resources/application.properties.Docker src/main/resources/application.properties
+
+    - name: add execution permission to mvnw 
+      run: chmod +x mvnw
+
+    - name: Build the jar app
+      run: |
+        ./mvnw package -DskipTests && 
+        mv target/$(./mvnw help:evaluate -Dexpression=project.artifactId -q -DforceStdout)-$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout).jar target/app.jar
+        java -Djarmode=layertools -jar target/app.jar extract --destination target/extracted
+    
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: luis.delgado13@inacapmail.cl
+        password: ${{ secrets.TOKEN }}
+
+    - name: Build and push Docker images
+      uses: docker/build-push-action@v6.15.0
+      with:
+        context: .
+        file: Dockerfile prod
+        push: true
+        #tags: name/app:latest,name/app:1.0.0
+        tags: |
+          ghcr.io/luisdelgado-ld/backend:latest
+          ghcr.io/luisdelgado-ld/backend:${{ github.sha	}}
+        github-token: ${{ secrets.TOKEN }}

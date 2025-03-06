@@ -29,9 +29,9 @@ public class Caracteristicas {
     @Column (length = 300, nullable = false, unique = true)
     public String iconoUrl;
 
-    //@ManyToMany(mappedBy = "caracteristicas")
-    //@JsonIgnore // Evita problemas de serialización infinita
-    //private List<Habitacion> habitaciones;
+    @ManyToMany(mappedBy = "caracteristicas")
+    @JsonIgnore // Evita problemas de serialización infinita
+    private List<Habitacion> habitaciones;
 
     public void setIconoUrl(String iconoUrl) {
         this.iconoUrl = iconoUrl;

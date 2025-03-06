@@ -49,15 +49,24 @@ public class Habitacion {
     @JoinColumn(name = "categoria_id", nullable = true)
     private Categoria categoria;
 
-    //@ManyToMany
-    //@JoinTable(
-            //name = "habitacion_caracteristicas", // Cambio en el nombre de la tabla de relación
-    //joinColumns = @JoinColumn(name = "habitacion_id"),
-    //inverseJoinColumns = @JoinColumn(name = "caracteristica_id") // Cambio en el nombre de la columna
-    //)
-    //@JsonIgnore // Evita bucles de serialización
-    //private List<Caracteristicas> caracteristicas = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(name = "habitacion_caracteristicas", // Cambio en el nombre de la tabla de relación
+    joinColumns = @JoinColumn(name = "habitacion_id"),
+    inverseJoinColumns = @JoinColumn(name = "caracteristica_id") // Cambio en el nombre de la columna
+    )
+    @JsonIgnore // Evita bucles de serialización
+    private List<Caracteristicas> caracteristicas = new ArrayList<>();
 
+
+    public Habitacion(HabitacionEntradaDto habitacionEntradaDto, List<Caracteristicas> Caracteristicas) {
+        this.nombre = habitacionEntradaDto.nombre();
+        this.descripcion = habitacionEntradaDto.descripcion();
+        this.tamano = habitacionEntradaDto.tamano();
+        this.isDisponible = habitacionEntradaDto.isDisponible();
+        this.precioUnitario = habitacionEntradaDto.precioUnitario();
+        this.categoria = habitacionEntradaDto.categoria();
+        this.caracteristicas = Caracteristicas;
+    }
 
     public Habitacion(HabitacionEntradaDto habitacionEntradaDto) {
         this.nombre = habitacionEntradaDto.nombre();
@@ -66,9 +75,7 @@ public class Habitacion {
         this.isDisponible = habitacionEntradaDto.isDisponible();
         this.precioUnitario = habitacionEntradaDto.precioUnitario();
         this.categoria = habitacionEntradaDto.categoria();
-        //this.caracteristicas = Caracteristicas;
     }
 
-    //public Habitacion(HabitacionEntradaDto habitacionEntradaDto) {
-    //}
+
 }

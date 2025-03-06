@@ -37,19 +37,25 @@ public class HabitacionService implements IHabitacionService {
     @Autowired
     private CategoriaRepository categoriaRepository;
 
-    //@Autowired
-    //private CaracteristicasRepository caracteristicasRepository;
+    @Autowired
+    private CaracteristicasRepository caracteristicasRepository;
 
     @Override
     public ResponseEntity<HabitacionSalidaDto> registrarHabitacion(HabitacionEntradaDto habitacionEntradaDto, UriComponentsBuilder uriComponentsBuilder) {
         Habitacion habitacion = new Habitacion(habitacionEntradaDto);
-        Categoria categoria = categoriaRepository.findById(habitacion.getCategoria().getId()).orElse(null);
+        Categoria categoria = categoriaRepository.findById(habitacionEntradaDto.categoria().getId()).orElse(null);
         if (categoria == null) {
             throw new DataIntegrityViolationException("La categoría no existe");
         }
         habitacion.setCategoria(categoria);
         try {
-            HabitacionSalidaDto habitacionSalidaDto = new HabitacionSalidaDto(habitacionRepository.save(habitacion));
+            System.out.println("2: " + habitacion.getDescripcion());
+
+            habitacionRepository.save(habitacion);
+            System.out.println("3");
+            HabitacionSalidaDto habitacionSalidaDto = new HabitacionSalidaDto(habitacion);
+            //HabitacionSalidaDto habitacionSalidaDto = new HabitacionSalidaDto(habitacionRepository.save(habitacion));
+            System.out.println("4");
             return ResponseEntity.created(uriComponentsBuilder.path("/habitaciones/{id}").buildAndExpand(habitacionSalidaDto.id()).toUri()).body(habitacionSalidaDto);
         } catch (DataIntegrityViolationException ex) {
             throw new DataIntegrityViolationException("El nombre ya está en uso");
@@ -94,20 +100,20 @@ public class HabitacionService implements IHabitacionService {
         return false;
     }
 
-    //public Habitacion agregarCaracteristicasAHabitacion(Long habitacionId, List<Long> caracteristicasIds) {
-    //  Habitacion habitacion = habitacionRepository.findById(habitacionId)
-    //        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, ("Habitación no encontrada" + habitacionId)));
+    public Habitacion agregarCaracteristicasAHabitacion(Long habitacionId, List<Long> caracteristicasIds) {
+      Habitacion habitacion = habitacionRepository.findById(habitacionId)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, ("Habitación no encontrada" + habitacionId)));
 
-    //List<Caracteristicas> caracteristicas = caracteristicasRepository.findAllById(caracteristicasIds);
+    List<Caracteristicas> caracteristicas = caracteristicasRepository.findAllById(caracteristicasIds);
 
-    //if (caracteristicas.isEmpty()) {
-    //  throw new ResponseStatusException(HttpStatus.NOT_FOUND, ("No se encontraron categorías con los IDs proporcionados"));
-    //}
+    if (caracteristicas.isEmpty()) {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, ("No se encontraron categorías con los IDs proporcionados"));
+    }
 
-    //habitacion.getCaracteristicas().addAll(caracteristicas);
-    // Habitacion habitacionActualizada = habitacionRepository.save(habitacion);
+    habitacion.getCaracteristicas().addAll(caracteristicas);
+     Habitacion habitacionActualizada = habitacionRepository.save(habitacion);
 
-    //return ResponseEntity.ok(habitacionActualizada).getBody();
-    //}
+    return ResponseEntity.ok(habitacionActualizada).getBody();
+    }
 
 }

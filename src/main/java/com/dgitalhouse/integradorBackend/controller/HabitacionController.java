@@ -26,8 +26,10 @@ public class HabitacionController {
         this.habitacionService = habitacionService;
     }
 
+
     @PostMapping
     public ResponseEntity<HabitacionSalidaDto> registrarHabitacion(@RequestBody @Valid HabitacionEntradaDto habitacionEntradaDto, UriComponentsBuilder uriComponentsBuilder) {
+        System.out.println("uno");
         return habitacionService.registrarHabitacion(habitacionEntradaDto, uriComponentsBuilder);
 
     }
@@ -63,14 +65,13 @@ public class HabitacionController {
         }
     }
 
-    //@PutMapping("/{id}/caracteristicas")
-    //public ResponseEntity<Habitacion> asociarCaracteristicasAHabitacion(
-    //      @PathVariable Long id,
-    //    @RequestBody List<Long> categoriaIds) {
+    @PutMapping("/{id}/caracteristicas")
+    public ResponseEntity<HabitacionSalidaDto> asociarCaracteristicasAHabitacion(@PathVariable Long id, @RequestBody List<Long> caracteristicasIds) {
 
-    //Habitacion habitacionActualizada = habitacionService.agregarCaracteristicasAHabitacion(id, categoriaIds);
-    //return ResponseEntity.ok(habitacionActualizada);
-    //}
+    Habitacion habitacionActualizada = habitacionService.agregarCaracteristicasAHabitacion(id, caracteristicasIds);
+    HabitacionSalidaDto habitacionSalidaDto = new HabitacionSalidaDto(habitacionActualizada);
+    return ResponseEntity.ok(habitacionSalidaDto);
+    }
 
 
 }

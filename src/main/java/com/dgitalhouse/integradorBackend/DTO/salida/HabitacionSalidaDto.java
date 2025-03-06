@@ -1,5 +1,6 @@
 package com.dgitalhouse.integradorBackend.DTO.salida;
 
+import com.dgitalhouse.integradorBackend.entity.Caracteristicas;
 import com.dgitalhouse.integradorBackend.entity.Categoria;
 import com.dgitalhouse.integradorBackend.entity.Habitacion;
 import com.dgitalhouse.integradorBackend.entity.Imagen;
@@ -13,6 +14,8 @@ public record HabitacionSalidaDto(
     String descripcion,
     List<Imagen> imagenes,
     Categoria categoria,
+
+    List<Caracteristicas> caracteristicas,
     TamanoHabitacion tamano,
     Boolean isDisponible,
     Double precioUnitario
@@ -20,6 +23,13 @@ public record HabitacionSalidaDto(
 ) {
     public HabitacionSalidaDto(Habitacion habitacion) {
 
-        this(habitacion.getId(), habitacion.getNombre(), habitacion.getDescripcion(), habitacion.getImagenes(), habitacion.getCategoria(), habitacion.getTamano(), habitacion.getIsDisponible(), habitacion.getPrecioUnitario());
+        this(habitacion.getId(), habitacion.getNombre(),
+                habitacion.getDescripcion(),
+                habitacion.getImagenes(),
+                habitacion.getCategoria(),
+                habitacion.getCaracteristicas(),
+                habitacion.getTamano(),
+                habitacion.getIsDisponible(),
+                habitacion.getPrecioUnitario());
     }
 }

@@ -27,5 +27,5 @@ public interface IHabitacionService {
 
     boolean eliminarHabitacion(Long id);
 
-    //Habitacion agregarCaracteristicasAHabitacion(Long id, List<Long> categoriaIds);
+    Habitacion agregarCaracteristicasAHabitacion(Long id, List<Long> categoriaIds);
 }

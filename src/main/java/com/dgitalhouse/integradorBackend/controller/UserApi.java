@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequestMapping("/api/auth")
-@SecurityRequirement(name= "Bearer Authentication")
+//@SecurityRequirement(name= "Bearer Authentication")
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public interface UserApi {

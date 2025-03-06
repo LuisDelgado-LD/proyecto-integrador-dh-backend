@@ -48,12 +48,10 @@ public class CaracteristicasService implements ICaracteristicasService {
             throw new RuntimeException("Error al subir la imagen a Cloudinary", e);
         }
 
-        // 2️⃣ Crear la entidad Caracteristicas con la URL del icono
         Caracteristicas caracteristicas = new Caracteristicas();
         caracteristicas.setNombre(nombre);
         caracteristicas.setIconoUrl(iconoUrl);
 
-        // 3️⃣ Guardar en la base de datos
         CaracteristicasSalidaDto salidaDto = new CaracteristicasSalidaDto(caracteristicasRepository.save(caracteristicas));
 
         return ResponseEntity.created(uriComponentsBuilder.path("/caracteristicas/{id}")
@@ -89,41 +87,26 @@ public class CaracteristicasService implements ICaracteristicasService {
         caracteristica.setNombre(nombre);
         caracteristica.setIconoUrl(iconoUrl);
 
-        // 3️⃣ Guardar cambios
         CaracteristicasSalidaDto salidaDto = new CaracteristicasSalidaDto(caracteristicasRepository.save(caracteristica));
-
         return ResponseEntity.ok(salidaDto);
-
     }
-
     @Override
     public boolean eliminarCaracteristicas(Long id) {
-
         Caracteristicas caracteristica = caracteristicasRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Característica no encontrada"));
-
         // 1️⃣ Obtener la URL de la imagen
         String iconoUrl = caracteristica.getIconoUrl();
 
-        System.out.println("uno: " + iconoUrl);
         if (iconoUrl != null && !iconoUrl.isEmpty()) {
-
-            System.out.println("dos: " + iconoUrl);
             // Extraer public_id manualmente sin modificar CloudinaryService
             String publicId = obtenerPublicIdDesdeUrl(iconoUrl);
 
-            System.out.println("tres: " + publicId );
-            // Llamar al método de eliminación de Cloudinary
             boolean eliminada = cloudinaryService.eliminarImagen(publicId);
-
             if (!eliminada) {
                 throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "No se pudo eliminar la imagen de Cloudinary");
             }
         }
-
-        // 2️⃣ Eliminar la característica de la base de datos
         caracteristicasRepository.delete(caracteristica);
-
         return ResponseEntity.ok("Característica eliminada correctamente.").hasBody();
     }
     private String obtenerPublicIdDesdeUrl(String imageUrl) {

@@ -25,8 +25,6 @@ public class Categoria {
     @Column (length = 200, nullable = false)
     private String descripcion;
 
-    //@OneToOne(mappedBy = "categoria", cascade = CascadeType.ALL, orphanRemoval = true)
-    //@JsonManagedReference
     @Column(length = 300, nullable = true )
     private String imagenUrl;
 

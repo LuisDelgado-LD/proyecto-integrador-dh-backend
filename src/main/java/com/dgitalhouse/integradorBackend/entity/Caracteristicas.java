@@ -30,7 +30,7 @@ public class Caracteristicas {
     public String iconoUrl;
 
     @ManyToMany(mappedBy = "caracteristicas")
-    @JsonIgnore // Evita problemas de serialización infinita
+    @JsonIgnore
     private List<Habitacion> habitaciones;
 
     public void setIconoUrl(String iconoUrl) {

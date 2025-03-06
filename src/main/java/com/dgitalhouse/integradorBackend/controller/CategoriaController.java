@@ -18,6 +18,7 @@ public class CategoriaController {
     private ICategoriaService categoriaService;
 
     public CategoriaController(ICategoriaService categoriaService) { this.categoriaService = categoriaService; }
+
     @PostMapping
     public ResponseEntity<CategoriaSalidaDto> registrarCategoria(@RequestBody @Valid CategoriaEntradaDto categoriaEntradaDto, UriComponentsBuilder uriComponentsBuilder) {
         {
@@ -36,7 +37,8 @@ public class CategoriaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CategoriaSalidaDto> actualizarCategoria(@PathVariable Long id, @RequestBody @Valid CategoriaEntradaDto categoriaEntradaDto) {
+    public ResponseEntity<CategoriaSalidaDto> actualizarCategoria(
+            @PathVariable Long id, @RequestBody @Valid CategoriaEntradaDto categoriaEntradaDto) {
         return categoriaService.actualizarCategoria(id, categoriaEntradaDto);
     }
 

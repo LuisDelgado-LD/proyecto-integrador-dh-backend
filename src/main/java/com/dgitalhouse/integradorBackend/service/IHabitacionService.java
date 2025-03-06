@@ -2,6 +2,7 @@ package com.dgitalhouse.integradorBackend.service;
 
 import com.dgitalhouse.integradorBackend.DTO.entrada.HabitacionEntradaDto;
 import com.dgitalhouse.integradorBackend.DTO.salida.HabitacionSalidaDto;
+import com.dgitalhouse.integradorBackend.entity.Habitacion;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -26,4 +27,5 @@ public interface IHabitacionService {
 
     boolean eliminarHabitacion(Long id);
 
+    //Habitacion agregarCaracteristicasAHabitacion(Long id, List<Long> categoriaIds);
 }

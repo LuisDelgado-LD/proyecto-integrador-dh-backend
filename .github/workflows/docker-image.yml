@@ -32,15 +32,10 @@ jobs:
 
     - name: Modify content to match with prod env
       run: mv src/main/resources/application.properties.Docker src/main/resources/application.properties
-<<<<<<< HEAD
 
     - name: add execution permission to mvnw 
       run: chmod +x mvnw
-    
-=======
-    - name: add execution permission to mvnw 
-      run: chmod +x mvnw
->>>>>>> 24ef830 (test commit)
+
     - name: Build the jar app
       run: |
         ./mvnw package -DskipTests && 

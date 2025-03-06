@@ -50,11 +50,11 @@ public class Habitacion {
     private Categoria categoria;
 
     @ManyToMany
-    @JoinTable(name = "habitacion_caracteristicas", // Cambio en el nombre de la tabla de relación
+    @JoinTable(name = "habitacion_caracteristicas",
     joinColumns = @JoinColumn(name = "habitacion_id"),
-    inverseJoinColumns = @JoinColumn(name = "caracteristica_id") // Cambio en el nombre de la columna
+    inverseJoinColumns = @JoinColumn(name = "caracteristica_id")
     )
-    @JsonIgnore // Evita bucles de serialización
+    @JsonIgnore
     private List<Caracteristicas> caracteristicas = new ArrayList<>();
 
 

@@ -33,7 +33,7 @@ public class Categoria {
     public Categoria(CategoriaEntradaDto categoriaEntradaDto) {
         this.nombre = categoriaEntradaDto.nombre();
         this.descripcion = categoriaEntradaDto.descripcion();
-        this.imagenUrl = categoriaEntradaDto.imagenUrl(); // Asegúrate de que el DTO tenga este campo
+        this.imagenUrl = categoriaEntradaDto.imagenUrl();
     }
 
     public void setImagenUrl(String imagenUrl) {

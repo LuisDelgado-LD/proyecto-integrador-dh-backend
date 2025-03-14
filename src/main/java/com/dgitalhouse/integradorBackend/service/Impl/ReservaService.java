@@ -31,26 +31,16 @@ public class ReservaService implements IReservaService {
     public ResponseEntity<ReservaSalidaDto> registrarReserva(
             ReservaEntradaDto reservaEntradaDto, UriComponentsBuilder uriComponentsBuilder) {
 
-        System.out.println("CERO :");
-
         Usuario usuario = usuarioRepository.findById(reservaEntradaDto.usuarioId())
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-
-        System.out.println("uno :"+ usuario);
 
         Habitacion habitacion = habitacionRepository.findById(reservaEntradaDto.habitacionId())
         .orElseThrow(() -> new RuntimeException("Habitacion no encontrada"));
 
-        System.out.println("dos :"+ habitacion);
-
         LocalDate fechaCreacion = LocalDate.now();
-        System.out.println("tres :"+ fechaCreacion);
 
         LocalDate fechaEntrada = LocalDate.parse(reservaEntradaDto.getFechaEntrada());
         LocalDate fechaSalida = LocalDate.parse(reservaEntradaDto.getFechaSalida());
-
-        System.out.println("cuatro :"+ fechaEntrada);
-        System.out.println("cinco :"+ fechaSalida);
 
         if (fechaEntrada.isBefore(LocalDate.now())) {
             throw new RuntimeException("La fecha de entrada debe ser posterior a la fecha actual");
@@ -66,19 +56,13 @@ public class ReservaService implements IReservaService {
 
         Double precioTotal = habitacion.getPrecioUnitario() * (fechaSalida.toEpochDay() - fechaEntrada.toEpochDay());
 
-        System.out.println("seis :"+ precioTotal);
-
         Reserva reserva = new Reserva(reservaEntradaDto, usuario,habitacion, precioTotal);
 
-        System.out.println("siete :"+ reserva);
         ReservaSalidaDto reservaSalidaDto = new ReservaSalidaDto(reservaRepository.save(reserva));
-
-        System.out.println("ocho :"+ reservaSalidaDto);
 
         return ResponseEntity.created(uriComponentsBuilder.path("/reservas/{id}")
                 .buildAndExpand(reservaSalidaDto.id()).toUri()).body(reservaSalidaDto);
     }
-
 
     private boolean habitacionEstaDisponible(Habitacion habitacion, LocalDate fechaEntrada, LocalDate fechaSalida) {
         for (Reserva reserva : habitacion.getReservas()) {

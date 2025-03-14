@@ -2,6 +2,7 @@ package com.dgitalhouse.integradorBackend.entity;
 
 import com.dgitalhouse.integradorBackend.entity.enums.Rol;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,6 +22,7 @@ import java.util.List;
 @Setter
 @ToString
 @Builder
+@EqualsAndHashCode
 public class Usuario implements UserDetails {
 
     @Id
@@ -49,8 +51,6 @@ public class Usuario implements UserDetails {
     @Column(nullable = false)
     private String rol;
 
-    @OneToMany (mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<Mascota> mascotas;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

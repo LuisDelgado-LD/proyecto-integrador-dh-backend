@@ -4,5 +4,5 @@ public enum EstadoReserva {
 
     CONFIRMADA,
     CANCELADA,
-    MODIFI
+    MODIFICADA
 }

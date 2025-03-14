@@ -1,15 +1,28 @@
 package com.dgitalhouse.integradorBackend.DTO.salida;
 
-import com.dgitalhouse.integradorBackend.entity.Habitacion;
-import com.dgitalhouse.integradorBackend.entity.Mascota;
-import com.dgitalhouse.integradorBackend.entity.Usuario;
+import com.dgitalhouse.integradorBackend.entity.Reserva;
+
 public record ReservaSalidaDto(
     Long id,
-    Usuario usuario,
-    Mascota mascota,
-    Habitacion habitacion,
+    Long usuarioId,
+    String nombreUsuario,
+    Long habitacionId,
+    String nombreHabitacion,
+    String fechaCreacion,
     String fechaEntrada,
     String fechaSalida,
-    String estado
+    String estado,
+    Double precioTotal
 ) {
+
+
+    public ReservaSalidaDto(Reserva reserva) {
+        this(reserva.getId(), reserva.getUsuario().getId(),
+                reserva.getUsuario().getNombre(), reserva.getHabitacion().getId(),
+                reserva.getHabitacion().getNombre(), reserva.getFechaCreacion().toString(),
+                reserva.getFechaEntrada().toString(), reserva.getFechaSalida().toString(),
+                reserva.getEstado().toString(), reserva.getPrecioTotal());
+    }
+
+
 }

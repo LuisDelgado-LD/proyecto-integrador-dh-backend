@@ -57,6 +57,10 @@ public class Habitacion {
     @JsonIgnore
     private List<Caracteristicas> caracteristicas = new ArrayList<>();
 
+    @OneToMany(mappedBy = "habitacion", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Reserva> reservas = new ArrayList<>();
+
 
     public Habitacion(HabitacionEntradaDto habitacionEntradaDto, List<Caracteristicas> Caracteristicas) {
         this.nombre = habitacionEntradaDto.nombre();

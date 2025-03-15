@@ -2,13 +2,11 @@ package com.dgitalhouse.integradorBackend.service.Impl;
 
 import com.dgitalhouse.integradorBackend.DTO.entrada.HabitacionEntradaDto;
 import com.dgitalhouse.integradorBackend.DTO.salida.HabitacionSalidaDto;
-import com.dgitalhouse.integradorBackend.entity.Caracteristicas;
-import com.dgitalhouse.integradorBackend.entity.Categoria;
-import com.dgitalhouse.integradorBackend.entity.Habitacion;
-import com.dgitalhouse.integradorBackend.entity.Imagen;
+import com.dgitalhouse.integradorBackend.entity.*;
 import com.dgitalhouse.integradorBackend.repository.CaracteristicasRepository;
 import com.dgitalhouse.integradorBackend.repository.CategoriaRepository;
 import com.dgitalhouse.integradorBackend.repository.HabitacionRepository;
+import com.dgitalhouse.integradorBackend.repository.ReservaRepository;
 import com.dgitalhouse.integradorBackend.service.IHabitacionService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -23,9 +21,13 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class HabitacionService implements IHabitacionService {
@@ -116,4 +118,19 @@ public class HabitacionService implements IHabitacionService {
     return ResponseEntity.ok(habitacionActualizada).getBody();
     }
 
+    @Override
+    public List<HabitacionSalidaDto> buscarHabitacionesPorTermino(Long categoriaId, LocalDate fechaEntrada, LocalDate fechaSalida) {
+        Categoria categoria = categoriaRepository.findById(categoriaId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "La categoría no existe"));
+
+        System.out.println("uno: " + categoria.getNombre());
+
+        List<Habitacion> habitacionesDisponibles = habitacionRepository.findAvailableRooms(categoriaId, fechaEntrada, fechaSalida);
+
+
+        return habitacionesDisponibles.stream()
+                .map(HabitacionSalidaDto::new)
+                .collect(Collectors.toList());
+
+    }
 }

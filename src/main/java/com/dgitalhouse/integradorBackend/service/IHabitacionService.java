@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -28,4 +29,6 @@ public interface IHabitacionService {
     boolean eliminarHabitacion(Long id);
 
     Habitacion agregarCaracteristicasAHabitacion(Long id, List<Long> categoriaIds);
+
+    List<HabitacionSalidaDto> buscarHabitacionesPorTermino(Long categoriaId, LocalDate fechaEntrada, LocalDate fechaSalida);
 }

@@ -1,10 +1,11 @@
 package com.dgitalhouse.integradorBackend.DTO.salida;
 
 import com.dgitalhouse.integradorBackend.entity.Reserva;
+import com.dgitalhouse.integradorBackend.entity.Usuario;
 
 public record ReservaSalidaDto(
     Long id,
-    Long usuarioId,
+    long usuarioId,
     String nombreUsuario,
     Long habitacionId,
     String nombreHabitacion,

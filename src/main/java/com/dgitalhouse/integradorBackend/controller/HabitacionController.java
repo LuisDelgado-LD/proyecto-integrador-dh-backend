@@ -2,6 +2,7 @@ package com.dgitalhouse.integradorBackend.controller;
 
 import com.dgitalhouse.integradorBackend.DTO.entrada.HabitacionEntradaDto;
 import com.dgitalhouse.integradorBackend.DTO.salida.HabitacionSalidaDto;
+import com.dgitalhouse.integradorBackend.entity.Categoria;
 import com.dgitalhouse.integradorBackend.entity.Habitacion;
 import com.dgitalhouse.integradorBackend.service.IHabitacionService;
 import jakarta.validation.Valid;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -73,5 +75,15 @@ public class HabitacionController {
     return ResponseEntity.ok(habitacionSalidaDto);
     }
 
+   @GetMapping("/buscar")
+    public ResponseEntity<List<HabitacionSalidaDto>> buscarHabitacionesPorTermino(@RequestParam Long categoriaId, LocalDate fechaEntrada, LocalDate fechaSalida) {
+       List<HabitacionSalidaDto> habitaciones = habitacionService.buscarHabitacionesPorTermino(categoriaId, fechaEntrada, fechaSalida);
+
+        if (habitaciones.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(habitacionService.buscarHabitacionesPorTermino(categoriaId, fechaEntrada, fechaSalida));
+    }
 
 }

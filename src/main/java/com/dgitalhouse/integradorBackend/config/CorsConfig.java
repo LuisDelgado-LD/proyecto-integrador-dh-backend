@@ -12,8 +12,9 @@ public class CorsConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
+                String allowedOrigins = System.getenv("CORS_ALLOWED");
                 registry.addMapping("/**")
-                        .allowedOrigins("localhost:8080") // Cambia "*" por tu dominio si es necesario
+                        .allowedOrigins(allowedOrigins != null ? allowedOrigins : "localhost:8080")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);

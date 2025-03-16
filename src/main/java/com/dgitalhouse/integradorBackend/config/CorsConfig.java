@@ -14,7 +14,7 @@ public class CorsConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 String allowedOrigins = System.getenv("CORS_ALLOWED");
                 registry.addMapping("/**")
-                        .allowedOrigins(allowedOrigins != null ? allowedOrigins : "localhost:8080")
+                        .allowedOrigins(allowedOrigins != null ? allowedOrigins : "http://localhost:8080")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);

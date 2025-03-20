@@ -22,7 +22,7 @@ public class Categoria {
     @Column (length = 100, nullable = false, unique = true)
     private String nombre;
 
-    @Column (length = 200, nullable = false)
+    @Column (length = 400, nullable = false)
     private String descripcion;
 
     @Column(length = 300, nullable = true )

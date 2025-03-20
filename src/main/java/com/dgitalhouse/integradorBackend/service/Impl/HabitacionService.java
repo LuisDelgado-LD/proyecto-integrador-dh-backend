@@ -2,32 +2,26 @@ package com.dgitalhouse.integradorBackend.service.Impl;
 
 import com.dgitalhouse.integradorBackend.DTO.entrada.HabitacionEntradaDto;
 import com.dgitalhouse.integradorBackend.DTO.salida.HabitacionSalidaDto;
-import com.dgitalhouse.integradorBackend.entity.*;
+import com.dgitalhouse.integradorBackend.entity.Caracteristicas;
+import com.dgitalhouse.integradorBackend.entity.Categoria;
+import com.dgitalhouse.integradorBackend.entity.Habitacion;
 import com.dgitalhouse.integradorBackend.repository.CaracteristicasRepository;
 import com.dgitalhouse.integradorBackend.repository.CategoriaRepository;
 import com.dgitalhouse.integradorBackend.repository.HabitacionRepository;
-import com.dgitalhouse.integradorBackend.repository.ReservaRepository;
 import com.dgitalhouse.integradorBackend.service.IHabitacionService;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.Random;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class HabitacionService implements IHabitacionService {
@@ -133,4 +127,23 @@ public class HabitacionService implements IHabitacionService {
                 .collect(Collectors.toList());
 
     }
+
+    @Override
+    public List<HabitacionSalidaDto> buscarHabitacionesPorFechas(LocalDate fechaEntrada, LocalDate fechaSalida) {
+        List<Habitacion> habitacionesDisponibles = habitacionRepository.findHabitacionesDisponibles(fechaEntrada, fechaSalida);
+
+        return habitacionesDisponibles.stream()
+                .map(HabitacionSalidaDto::new)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<HabitacionSalidaDto> buscarHabitacionesPorNombre(String nombre) {
+        List<Habitacion> habitacionesEncontradas = habitacionRepository.findByNombreContainingIgnoreCase(nombre);
+
+        return habitacionesEncontradas.stream()
+                .map(HabitacionSalidaDto::new)
+                .collect(Collectors.toList());
+    }
+
 }

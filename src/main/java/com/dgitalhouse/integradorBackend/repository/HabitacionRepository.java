@@ -29,4 +29,15 @@ public interface HabitacionRepository extends JpaRepository<Habitacion, Long> {
                                         @Param("fechaSalida") LocalDate fechaSalida);
 
 
+
+
+    @Query("SELECT h FROM Habitacion h WHERE h.id NOT IN " +
+            "(SELECT r.habitacion.id FROM Reserva r WHERE " +
+            "(r.fechaEntrada < :fechaSalida AND r.fechaSalida > :fechaEntrada))")
+    List<Habitacion> findHabitacionesDisponibles(@Param("fechaEntrada") LocalDate fechaEntrada,
+                                                 @Param("fechaSalida") LocalDate fechaSalida);
+
+
+    List<Habitacion> findByNombreContainingIgnoreCase(String nombre);
 }
+

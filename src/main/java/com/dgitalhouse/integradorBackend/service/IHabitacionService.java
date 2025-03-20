@@ -31,4 +31,9 @@ public interface IHabitacionService {
     Habitacion agregarCaracteristicasAHabitacion(Long id, List<Long> categoriaIds);
 
     List<HabitacionSalidaDto> buscarHabitacionesPorTermino(Long categoriaId, LocalDate fechaEntrada, LocalDate fechaSalida);
+
+    List<HabitacionSalidaDto> buscarHabitacionesPorFechas(LocalDate fechaEntrada, LocalDate fechaSalida);
+
+
+    List<HabitacionSalidaDto> buscarHabitacionesPorNombre(String nombre);
 }

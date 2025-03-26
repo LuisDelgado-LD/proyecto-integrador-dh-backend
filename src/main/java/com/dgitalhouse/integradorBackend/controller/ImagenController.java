@@ -26,6 +26,7 @@ public class ImagenController {
     // 🟢 Subir una imagen a Cloudinary y guardarla en la BD
     @PostMapping("/{id}")
     public ResponseEntity<Map<String, String>> uploadImage(@RequestParam("imagen") MultipartFile file, @PathVariable Long id) {
+
         try {
             Imagen imagen = imagenService.uploadImage(id, file);
             return ResponseEntity.ok(Map.of("url", imagen.getUrl()));

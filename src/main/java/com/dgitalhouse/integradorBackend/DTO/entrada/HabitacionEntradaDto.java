@@ -1,5 +1,6 @@
 package com.dgitalhouse.integradorBackend.DTO.entrada;
 
+import com.dgitalhouse.integradorBackend.entity.Caracteristicas;
 import com.dgitalhouse.integradorBackend.entity.Categoria;
 import com.dgitalhouse.integradorBackend.entity.Imagen;
 import com.dgitalhouse.integradorBackend.entity.enums.TamanoHabitacion;
@@ -20,6 +21,7 @@ public record HabitacionEntradaDto(
         @NotNull
         Categoria categoria,
 
+   
     @NotNull
     TamanoHabitacion tamano,
     @NotNull

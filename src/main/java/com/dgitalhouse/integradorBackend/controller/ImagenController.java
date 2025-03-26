@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -49,7 +50,12 @@ public class ImagenController {
     public ResponseEntity<List<Map<String, String>>> getAllImages() {
         List<Map<String, String>> images = imagenService.findAll()
                 .stream()
-                .map(imagen -> Map.of("url", imagen.getUrl()))
+                .map(imagen -> {
+                    Map<String, String> imageMap = new HashMap<>();
+                    imageMap.put("id", String.valueOf(imagen.getId())); // Convertimos la ID a String
+                    imageMap.put("url", imagen.getUrl());
+                    return imageMap;
+                })
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(images);

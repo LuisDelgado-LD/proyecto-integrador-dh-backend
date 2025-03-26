@@ -34,7 +34,23 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request -> request.requestMatchers("/**")
                         .permitAll()
                         .anyRequest()
-                        .authenticated())
+                        .authenticated()
+                        // 📌 🔓 Rutas públicas (cualquiera puede acceder)
+                       // .requestMatchers("/api/auth/**").permitAll()  // Registro y login
+                       // .requestMatchers("/api/habitaciones/disponibles").permitAll()  // Ver habitaciones disponibles
+
+                        // 📌 🔒 Rutas protegidas (se necesita autenticación)
+                        //.requestMatchers("/api/usuarios/**").authenticated()  // Usuarios autenticados pueden acceder
+                       // .requestMatchers("/api/reservas/**").authenticated()  // Solo usuarios autenticados pueden hacer reservas
+
+                        // 📌 🔐 Rutas exclusivas para ADMIN
+                       // .requestMatchers("/api/admin/**").hasRole("ADMIN")  // Protegido solo para admins
+                      //  .requestMatchers("/api/habitaciones").hasRole("ADMIN")  // Solo ADMIN puede crear habitaciones
+
+                        // 📌 🚫 Bloquear cualquier otra ruta que no esté definida
+                       // .anyRequest().denyAll()
+
+                )
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

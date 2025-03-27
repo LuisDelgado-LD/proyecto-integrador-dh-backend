@@ -49,12 +49,13 @@ public class Usuario implements UserDetails {
 
 
     @Column(nullable = false)
-    private String rol;
+    @Enumerated(EnumType.STRING)
+    private Rol rol;
 
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of( new SimpleGrantedAuthority(rol));
+        return List.of( new SimpleGrantedAuthority(rol.toString()));
     }
 
     @Override

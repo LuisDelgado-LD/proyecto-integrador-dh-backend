@@ -9,9 +9,15 @@ public record CategoriaSalidaDto(
         Long id,
         String nombre,
         String descripcion,
-        String imagenUrl
+        String imagenUrl,
+        int patitas
 ) {
     public CategoriaSalidaDto(Categoria categoria) {
-        this(categoria.getId(), categoria.getNombre(), categoria.getDescripcion(), categoria.getImagenUrl());
+        this(categoria.getId(),
+                categoria.getNombre(),
+                categoria.getDescripcion(),
+                categoria.getImagenUrl(),
+                categoria.getPatitas()
+        );
     }
 }

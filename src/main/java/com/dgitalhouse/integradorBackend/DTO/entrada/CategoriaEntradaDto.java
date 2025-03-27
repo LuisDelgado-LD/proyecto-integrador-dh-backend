@@ -13,7 +13,9 @@ public record CategoriaEntradaDto(
         String nombre,
         @NotBlank
         String descripcion,
-        String imagenUrl
+        String imagenUrl,
+        @NotNull
+        Integer patitas
 )
 
 {

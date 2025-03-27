@@ -28,10 +28,13 @@ public class Categoria {
     @Column(length = 300, nullable = true )
     private String imagenUrl;
 
+    private Integer patitas;
+
     public Categoria(CategoriaEntradaDto categoriaEntradaDto) {
         this.nombre = categoriaEntradaDto.nombre();
         this.descripcion = categoriaEntradaDto.descripcion();
         this.imagenUrl = categoriaEntradaDto.imagenUrl();
+        this.patitas =categoriaEntradaDto.patitas();
     }
 
     public void setImagenUrl(String imagenUrl) {

@@ -69,6 +69,10 @@ public class CategoriaService implements ICategoriaService {
         if (categoriaEntradaDto.imagenUrl() != null) { // Solo actualizar si no es null
             categoria.setImagenUrl(categoriaEntradaDto.imagenUrl());
         }
+        if (categoriaEntradaDto.patitas() != null) {
+            categoria.setPatitas(categoriaEntradaDto.patitas());
+
+        }
        Categoria categoriaActualizada = categoriaRepository.save(categoria);
 
         return ResponseEntity.ok(new CategoriaSalidaDto(categoriaActualizada));

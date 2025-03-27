@@ -42,8 +42,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private Usuario updateUserFields(Usuario existingUser, UpdateUserRequest updateUserRequest) {
-        existingUser.setEmail(updateUserRequest.getEmail());
-        existingUser.setNombre(updateUserRequest.getNombre());
+
         existingUser.setRol(updateUserRequest.getRol());
         return existingUser;
     }

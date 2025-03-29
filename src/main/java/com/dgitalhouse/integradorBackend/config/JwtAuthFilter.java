@@ -36,7 +36,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 .flatMap(userId -> usuarioRepository.findById(Long.valueOf(userId)))
                 .ifPresent(userDetails ->{
                     request.setAttribute( "X-User-Id", userDetails.getId());
+                    request.setAttribute("X-User-Role",userDetails.getRol());
                     processAuthentication(request, userDetails);
+
                 });
         filterChain.doFilter(request, response);
     }

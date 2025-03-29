@@ -1,5 +1,7 @@
 package com.dgitalhouse.integradorBackend.controller.impl;
 
+import com.dgitalhouse.integradorBackend.DTO.userDTOS.UpdateUserRequest;
+import com.dgitalhouse.integradorBackend.DTO.userDTOS.UserInfoRequest;
 import com.dgitalhouse.integradorBackend.controller.UserApi;
 import com.dgitalhouse.integradorBackend.entity.Usuario;
 import com.dgitalhouse.integradorBackend.service.UserService;
@@ -18,5 +20,16 @@ public class UserController implements UserApi {
     @Override
     public ResponseEntity<Usuario> getUser(Long Id) {
         return ResponseEntity.ok(userService.getUser(Id));
+    }
+
+    @Override
+    public ResponseEntity<Usuario> deleteUser(UserInfoRequest userInfoRequest) {
+        return ResponseEntity.noContent().build();
+    }
+
+    @Override
+    public ResponseEntity<Usuario> updateUser(Long Id, UpdateUserRequest updateUserRequest) {
+        userService.updateUser(Id,updateUserRequest);
+        return ResponseEntity.noContent().build();
     }
 }

@@ -4,6 +4,7 @@ import com.dgitalhouse.integradorBackend.DTO.userDTOS.LoginRequest;
 import com.dgitalhouse.integradorBackend.DTO.userDTOS.TokenResponse;
 import com.dgitalhouse.integradorBackend.DTO.userDTOS.UserRequest;
 import com.dgitalhouse.integradorBackend.entity.Usuario;
+import com.dgitalhouse.integradorBackend.entity.enums.Rol;
 import com.dgitalhouse.integradorBackend.repository.UsuarioRepository;
 import com.dgitalhouse.integradorBackend.service.AuthService;
 import com.dgitalhouse.integradorBackend.service.JwtService;
@@ -11,6 +12,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+
+import static com.dgitalhouse.integradorBackend.entity.enums.Rol.USER;
+
 @Service
 public class AuthServiceImpl implements AuthService {
     private final UsuarioRepository usuarioRepository;
@@ -40,7 +44,7 @@ public class AuthServiceImpl implements AuthService {
                 .apellido(userRequest.getApellido())
                 .direccion(userRequest.getDireccion())
                 .telefono(userRequest.getTelefono())
-                .rol("USUARIO")
+                .rol(USER)
                 .build();
 
     }

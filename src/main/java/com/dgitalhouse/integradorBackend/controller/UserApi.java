@@ -1,20 +1,30 @@
 package com.dgitalhouse.integradorBackend.controller;
 
+import com.dgitalhouse.integradorBackend.DTO.userDTOS.UpdateUserRequest;
+import com.dgitalhouse.integradorBackend.DTO.userDTOS.UserInfoRequest;
 import com.dgitalhouse.integradorBackend.entity.Usuario;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/api/auth")
 //@SecurityRequirement(name= "Bearer Authentication")
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+//@CrossOrigin(origins = "*", allowedHeaders = "*")
 public interface UserApi {
     @GetMapping()
     ResponseEntity<Usuario> getUser(
             @RequestAttribute("X-User-Id") Long Id
     );
+
+    @DeleteMapping(value= "/deleteUser")
+    ResponseEntity<Usuario>deleteUser(
+            @RequestBody UserInfoRequest userInfoRequest
+            );
+
+    @PutMapping()
+    ResponseEntity<Usuario>updateUser(
+            @RequestAttribute("X-User-Id") Long Id,
+            @RequestBody UpdateUserRequest updateUserRequest
+            );
 }

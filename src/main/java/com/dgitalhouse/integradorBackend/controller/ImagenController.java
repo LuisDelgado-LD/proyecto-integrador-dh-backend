@@ -35,12 +35,12 @@ public class ImagenController {
         }
     }
 
-    // 🟢 Obtener una imagen por ID
+
     @GetMapping("/{id}")
     public ResponseEntity<Map<String, String>> getImageById(@PathVariable Long id) {
         Imagen imagen = imagenService.findById(id);
         if (imagen != null) {
-            return ResponseEntity.ok(Map.of("url", imagen.getUrl()));
+            return ResponseEntity.ok(Map.of("url", imagen.getUrl(), "id", String.valueOf(imagen.getId())));
         } else {
             return ResponseEntity.status(404).body(Map.of("error", "Imagen no encontrada"));
         }
@@ -53,7 +53,7 @@ public class ImagenController {
                 .stream()
                 .map(imagen -> {
                     Map<String, String> imageMap = new HashMap<>();
-                    imageMap.put("id", String.valueOf(imagen.getId())); // Convertimos la ID a String
+                    imageMap.put("id", String.valueOf(imagen.getId()));
                     imageMap.put("url", imagen.getUrl());
                     return imageMap;
                 })
@@ -72,5 +72,10 @@ public class ImagenController {
         }
     }
 
+    @PutMapping("/{imagenId}/principal")
+    public ResponseEntity<Imagen> setImagenPrincipal(@PathVariable Long imagenId, @RequestParam Long habitacionId) {
+        Imagen imagenActualizada = imagenService.marcarComoPrincipal(imagenId, habitacionId);
+        return ResponseEntity.ok(imagenActualizada);
+    }
 
 }

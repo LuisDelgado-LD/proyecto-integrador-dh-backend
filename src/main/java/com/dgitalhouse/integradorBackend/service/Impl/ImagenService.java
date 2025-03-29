@@ -9,6 +9,7 @@ import com.dgitalhouse.integradorBackend.exception.InternalServerErrorException;
 import com.dgitalhouse.integradorBackend.repository.HabitacionRepository;
 import com.dgitalhouse.integradorBackend.repository.ImagenRepository;
 import com.dgitalhouse.integradorBackend.service.IImagenService;
+import jakarta.transaction.Transactional;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -75,4 +76,16 @@ public class ImagenService implements IImagenService {
         return false;
     }
 
- }
+    @Transactional
+    @Override
+    public Imagen marcarComoPrincipal(Long imagenId, Long habitacionId) {
+        imagenRepository.desmarcarImagenPrincipal(habitacionId);
+
+       Imagen imagen = imagenRepository.findById(imagenId)
+                .orElseThrow(() -> new RuntimeException("Imagen no encontrada"));
+
+        imagen.setEsPrincipal(true);
+        return imagenRepository.save(imagen);
+    }
+
+}

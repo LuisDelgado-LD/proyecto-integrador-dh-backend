@@ -11,7 +11,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/categorias")
@@ -20,8 +23,9 @@ public class ImagenCateController {
     private IImagCateService imagCateService;
 
     private Categoria categoria;
+
     @Autowired
-    public ImagenCateController (IImagCateService imagCateService) {
+    public ImagenCateController(IImagCateService imagCateService) {
         this.imagCateService = imagCateService;
     }
 
@@ -32,10 +36,9 @@ public class ImagenCateController {
             Categoria categoria = imagCateService.subirImage(id, file);
             return ResponseEntity.ok(Map.of("url", categoria.getImagenUrl()));
         } catch (Exception e) {
-            return ResponseEntity.status(500).body(Map.of("Error al subir la imagen", e.getMessage() ));
+            return ResponseEntity.status(500).body(Map.of("Error al subir la imagen", e.getMessage()));
         }
     }
-
 
 
 }

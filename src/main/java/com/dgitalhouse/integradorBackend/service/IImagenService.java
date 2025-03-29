@@ -18,7 +18,5 @@ public interface IImagenService {
     boolean eliminarImagen(Long id);
 
 
-
-
-
+    Imagen marcarComoPrincipal(Long imagenId, Long habitacionId);
 }

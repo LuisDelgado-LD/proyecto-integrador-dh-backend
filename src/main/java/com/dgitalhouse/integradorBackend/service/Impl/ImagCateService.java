@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 @Service
@@ -45,5 +46,6 @@ public class ImagCateService implements IImagCateService {
     public Categoria findById(Long id) {
         return categoriaRepository.findById(id).orElse(null);
     }
+
 
 }

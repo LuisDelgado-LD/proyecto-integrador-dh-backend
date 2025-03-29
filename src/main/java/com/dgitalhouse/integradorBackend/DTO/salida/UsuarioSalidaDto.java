@@ -6,8 +6,8 @@ public record UsuarioSalidaDto(
     String apellido,
     String email,
     String telefono,
-    String direccion,
-    String password
+    String direccion
+    //String password
 ) {
 
 

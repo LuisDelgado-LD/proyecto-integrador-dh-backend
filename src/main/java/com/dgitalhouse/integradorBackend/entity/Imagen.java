@@ -21,6 +21,8 @@ public class Imagen {
     @Column(length = 512, nullable = false)
     private String url;
 
+    private boolean esPrincipal;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "habitacion_id", nullable = false)
     @JsonBackReference

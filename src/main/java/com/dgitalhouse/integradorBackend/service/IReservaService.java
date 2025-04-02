@@ -7,6 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.time.LocalDate;
+
 public interface IReservaService {
     ResponseEntity<ReservaSalidaDto> registrarReserva(ReservaEntradaDto reservaEntradaDto, UriComponentsBuilder uriComponentsBuilder);
 
@@ -18,4 +20,6 @@ public interface IReservaService {
     ResponseEntity<Page<ReservaSalidaDto>> listarReservasPorUsuario(Long id);
 
     ResponseEntity<ReservaSalidaDto> actualizarReserva(Long id, ReservaEntradaDto reservaEntradaDto);
+
+
 }

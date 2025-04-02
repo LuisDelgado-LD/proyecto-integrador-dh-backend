@@ -25,5 +25,16 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long> {
                                                 @Param("fechaEntrada") LocalDate fechaEntrada,
                                                 @Param("fechaSalida") LocalDate fechaSalida);
 
-      //List<Reserva> findReservasEnRangoDeFechas(Long id, LocalDate fechaEntrada, LocalDate fechaSalida);
+
+    @Query("SELECT r FROM Reserva r WHERE r.habitacion.id = :habitacionId AND " +
+            "(r.fechaEntrada BETWEEN :fechaInicio AND :fechaFin OR " +
+            "r.fechaSalida BETWEEN :fechaInicio AND :fechaFin OR " +
+            ":fechaInicio BETWEEN r.fechaEntrada AND r.fechaSalida)")
+    List<Reserva> buscarReservasEnRango(@Param("fechaInicio") LocalDate fechaEntrada,
+                                        @Param("fechaFin") LocalDate fechaSalida,
+                                        @Param("habitacionId") Long habitacionId);
+
+    //List<Reserva> findReservasEnRangoDeFechas(Long id, LocalDate fechaEntrada, LocalDate fechaSalida);
+
+
 }

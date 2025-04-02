@@ -32,4 +32,6 @@ public record HabitacionSalidaDto(
                 habitacion.getIsDisponible(),
                 habitacion.getPrecioUnitario());
     }
+
+
 }

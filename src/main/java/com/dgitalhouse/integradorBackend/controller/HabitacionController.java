@@ -1,20 +1,20 @@
 package com.dgitalhouse.integradorBackend.controller;
 
+import com.dgitalhouse.integradorBackend.DTO.entrada.ConsultaPorFechaYNombre;
 import com.dgitalhouse.integradorBackend.DTO.entrada.HabitacionEntradaDto;
 import com.dgitalhouse.integradorBackend.DTO.salida.HabitacionSalidaDto;
-import com.dgitalhouse.integradorBackend.entity.Categoria;
 import com.dgitalhouse.integradorBackend.entity.Habitacion;
 import com.dgitalhouse.integradorBackend.service.IHabitacionService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -87,17 +87,19 @@ public class HabitacionController {
         return ResponseEntity.ok(habitacionSalidaDto);
     }
 
-    @GetMapping("/buscar")
+   @GetMapping("/buscar")
     @PreAuthorize("permitAll()")
-    public ResponseEntity<List<HabitacionSalidaDto>> buscarHabitacionesPorTermino(@RequestParam Long categoriaId, LocalDate fechaEntrada, LocalDate fechaSalida) {
-        List<HabitacionSalidaDto> habitaciones = habitacionService.buscarHabitacionesPorTermino(categoriaId, fechaEntrada, fechaSalida);
+    public ResponseEntity<List<HabitacionSalidaDto>> buscarHabitacionesPorNombreyFechas(@RequestBody ConsultaPorFechaYNombre consultaPorFechaYNombre) {
+       System.out.println(consultaPorFechaYNombre.entrada());
+       System.out.println(consultaPorFechaYNombre.salida());
 
-        if (habitaciones.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
 
-        return ResponseEntity.ok(habitacionService.buscarHabitacionesPorTermino(categoriaId, fechaEntrada, fechaSalida));
-    }
+       return ResponseEntity.ok(habitacionService.buscarHabitacionesPorNombreyFechas(consultaPorFechaYNombre));
+
+
+
+   }
+
 
     @GetMapping("/disponibles")
     @PreAuthorize("permitAll()")
@@ -111,9 +113,10 @@ public class HabitacionController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
         }
 
-        return ResponseEntity.ok(habitacionService.buscarHabitacionesPorFechas(fechaEntrada, fechaSalida));
+        return ResponseEntity.ok(habitaciones);
     }
-@GetMapping("/Nombre")
+
+@GetMapping("/nombre")
 public ResponseEntity<?> buscarPorNombre(@RequestParam String nombre) {
     List<HabitacionSalidaDto> habitaciones = habitacionService.buscarHabitacionesPorNombre(nombre);
 
@@ -125,5 +128,6 @@ public ResponseEntity<?> buscarPorNombre(@RequestParam String nombre) {
 
     return ResponseEntity.ok(habitacionService.buscarHabitacionesPorNombre(nombre));
 }
+
 
 }

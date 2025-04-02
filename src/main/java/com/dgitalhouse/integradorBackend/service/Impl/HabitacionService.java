@@ -1,5 +1,6 @@
 package com.dgitalhouse.integradorBackend.service.Impl;
 
+import com.dgitalhouse.integradorBackend.DTO.entrada.ConsultaPorFechaYNombre;
 import com.dgitalhouse.integradorBackend.DTO.entrada.HabitacionEntradaDto;
 import com.dgitalhouse.integradorBackend.DTO.salida.HabitacionSalidaDto;
 import com.dgitalhouse.integradorBackend.entity.Caracteristicas;
@@ -35,6 +36,9 @@ public class HabitacionService implements IHabitacionService {
 
     @Autowired
     private CaracteristicasRepository caracteristicasRepository;
+
+    @Autowired
+    private ReservaService reservaService;
 
     @Override
     public ResponseEntity<HabitacionSalidaDto> registrarHabitacion(HabitacionEntradaDto habitacionEntradaDto, UriComponentsBuilder uriComponentsBuilder) {
@@ -113,33 +117,33 @@ public class HabitacionService implements IHabitacionService {
     }
 
     @Override
-    public List<HabitacionSalidaDto> buscarHabitacionesPorTermino(Long categoriaId, LocalDate fechaEntrada, LocalDate fechaSalida) {
-        Categoria categoria = categoriaRepository.findById(categoriaId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "La categoría no existe"));
+    public List<HabitacionSalidaDto> buscarHabitacionesPorNombreyFechas(ConsultaPorFechaYNombre consultaPorFechaYNombre) {
 
-        System.out.println("uno: " + categoria.getNombre());
+        List<Habitacion> habitaciones = habitacionRepository.findByNombreContainingIgnoreCase(consultaPorFechaYNombre.nombre());
 
-        List<Habitacion> habitacionesDisponibles = habitacionRepository.findAvailableRooms(categoriaId, fechaEntrada, fechaSalida);
-
-
-        return habitacionesDisponibles.stream()
+        return habitaciones.stream()
+                .filter(habitacion -> reservaService.habitacionEstaDisponible(habitacion, consultaPorFechaYNombre.entrada(), consultaPorFechaYNombre.salida()))
                 .map(HabitacionSalidaDto::new)
                 .collect(Collectors.toList());
 
+
     }
+
+
 
     @Override
     public List<HabitacionSalidaDto> buscarHabitacionesPorFechas(LocalDate fechaEntrada, LocalDate fechaSalida) {
-        List<Habitacion> habitacionesDisponibles = habitacionRepository.findHabitacionesDisponibles(fechaEntrada, fechaSalida);
+        List<Habitacion> habitacionesDisponibles = habitacionRepository.findAll();
 
         return habitacionesDisponibles.stream()
+                .filter(habitacion -> reservaService.habitacionEstaDisponible(habitacion, fechaEntrada, fechaSalida))
                 .map(HabitacionSalidaDto::new)
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<HabitacionSalidaDto> buscarHabitacionesPorNombre(String nombre) {
-        List<Habitacion> habitacionesEncontradas = habitacionRepository.findByNombreContainingIgnoreCase(nombre);
+        List<Habitacion> habitacionesEncontradas = habitacionRepository.findByNombreIgnoreCase(nombre);
 
         return habitacionesEncontradas.stream()
                 .map(HabitacionSalidaDto::new)

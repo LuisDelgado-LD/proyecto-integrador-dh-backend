@@ -1,6 +1,7 @@
 package com.dgitalhouse.integradorBackend.service.Impl;
 
 import com.dgitalhouse.integradorBackend.DTO.entrada.ReservaEntradaDto;
+import com.dgitalhouse.integradorBackend.DTO.salida.HabitacionSalidaDto;
 import com.dgitalhouse.integradorBackend.DTO.salida.ReservaSalidaDto;
 import com.dgitalhouse.integradorBackend.entity.Caracteristicas;
 import com.dgitalhouse.integradorBackend.entity.Habitacion;
@@ -135,7 +136,7 @@ public class ReservaService implements IReservaService {
     }
 
 
-    private boolean habitacionEstaDisponible(Habitacion habitacion, LocalDate fechaEntrada, LocalDate fechaSalida) {
+    public boolean habitacionEstaDisponible(Habitacion habitacion, LocalDate fechaEntrada, LocalDate fechaSalida) {
         for (Reserva reserva : habitacion.getReservas()) {
             if (reserva.getFechaEntrada().isBefore(fechaSalida) && reserva.getFechaSalida().isAfter(fechaEntrada)) {
                 return false;
@@ -144,11 +145,14 @@ public class ReservaService implements IReservaService {
         return true;
     }
 
-    private boolean esHabitacionDisponibleParaActualizarReserva(Habitacion habitacion, LocalDate fechaEntrada, LocalDate fechaSalida, Long reservaId) {
+    public boolean esHabitacionDisponibleParaActualizarReserva(Habitacion habitacion, LocalDate fechaEntrada, LocalDate fechaSalida, Long reservaId) {
         List<Reserva> reservas = reservaRepository.findReservasEnRangoDeFechas(habitacion.getId(), fechaEntrada, fechaSalida);
 
         // Excluir la reserva que se está actualizando
         return reservas.stream().noneMatch(reserva -> !Objects.equals(reserva.getId(), reservaId));
     }
+
+
+
 
 }

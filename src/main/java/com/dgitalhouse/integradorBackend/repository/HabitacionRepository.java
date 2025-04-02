@@ -2,6 +2,7 @@ package com.dgitalhouse.integradorBackend.repository;
 
 
 import aj.org.objectweb.asm.commons.Remapper;
+import com.dgitalhouse.integradorBackend.entity.Reserva;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,17 +19,6 @@ public interface HabitacionRepository extends JpaRepository<Habitacion, Long> {
 
     Page<Habitacion> findByIsDisponibleTrue(Pageable pagination);
 
-    @Query("SELECT h FROM Habitacion h WHERE h.categoria.id = :categoriaId " +
-            "AND NOT EXISTS (" +
-            "    SELECT r FROM Reserva r " +
-            "    WHERE r.habitacion = h " +
-            "    AND (:fechaEntrada < r.fechaSalida AND :fechaSalida > r.fechaEntrada)" +
-            ")")
-    List<Habitacion> findAvailableRooms(@Param("categoriaId") Long categoriaId,
-                                        @Param("fechaEntrada") LocalDate fechaEntrada,
-                                        @Param("fechaSalida") LocalDate fechaSalida);
-
-
 
 
     @Query("SELECT h FROM Habitacion h WHERE h.id NOT IN " +
@@ -39,5 +29,8 @@ public interface HabitacionRepository extends JpaRepository<Habitacion, Long> {
 
 
     List<Habitacion> findByNombreContainingIgnoreCase(String nombre);
+
+
+    List<Habitacion> findByNombreIgnoreCase(String nombre);
 }
 

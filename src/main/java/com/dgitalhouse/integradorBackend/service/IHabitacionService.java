@@ -1,5 +1,6 @@
 package com.dgitalhouse.integradorBackend.service;
 
+import com.dgitalhouse.integradorBackend.DTO.entrada.ConsultaPorFechaYNombre;
 import com.dgitalhouse.integradorBackend.DTO.entrada.HabitacionEntradaDto;
 import com.dgitalhouse.integradorBackend.DTO.salida.HabitacionSalidaDto;
 import com.dgitalhouse.integradorBackend.entity.Habitacion;
@@ -30,7 +31,7 @@ public interface IHabitacionService {
 
     Habitacion agregarCaracteristicasAHabitacion(Long id, List<Long> categoriaIds);
 
-    List<HabitacionSalidaDto> buscarHabitacionesPorTermino(Long categoriaId, LocalDate fechaEntrada, LocalDate fechaSalida);
+    List<HabitacionSalidaDto> buscarHabitacionesPorNombreyFechas(ConsultaPorFechaYNombre consultaPorFechaYNombre);
 
     List<HabitacionSalidaDto> buscarHabitacionesPorFechas(LocalDate fechaEntrada, LocalDate fechaSalida);
 

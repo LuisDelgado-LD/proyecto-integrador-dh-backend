@@ -18,6 +18,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Usuario getUser(Long id) {
+        System.out.println("aqui");
         return Optional.of(id)
                 .flatMap(usuarioRepository :: findById)
                 .orElseThrow(() -> new RuntimeException("Error, no se pudo encontrar al usuario"));

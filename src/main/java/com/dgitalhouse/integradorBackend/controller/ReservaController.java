@@ -25,6 +25,7 @@ public class ReservaController {
     @PostMapping
     public ResponseEntity<ReservaSalidaDto> registrarReserva(
             @RequestBody @Valid ReservaEntradaDto reservaEntradaDto, UriComponentsBuilder uriComponentsBuilder) {
+        System.out.println("aqui");
 
         return reservaService.registrarReserva(reservaEntradaDto, uriComponentsBuilder);
     }

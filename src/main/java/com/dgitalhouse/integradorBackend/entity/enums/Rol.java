@@ -7,5 +7,4 @@ public enum Rol {
     USER,
     ADMIN,
 
-
 }

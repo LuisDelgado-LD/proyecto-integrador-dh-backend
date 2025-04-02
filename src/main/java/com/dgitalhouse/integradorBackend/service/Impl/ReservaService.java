@@ -36,10 +36,8 @@ public class ReservaService implements IReservaService {
     @Override
     public ResponseEntity<ReservaSalidaDto> registrarReserva(
             ReservaEntradaDto reservaEntradaDto, UriComponentsBuilder uriComponentsBuilder) {
-
         Usuario usuario = usuarioRepository.findById(reservaEntradaDto.usuarioId())
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-
         Habitacion habitacion = habitacionRepository.findById(reservaEntradaDto.habitacionId())
         .orElseThrow(() -> new RuntimeException("Habitacion no encontrada"));
 
@@ -62,7 +60,7 @@ public class ReservaService implements IReservaService {
 
         Double precioTotal = habitacion.getPrecioUnitario() * (fechaSalida.toEpochDay() - fechaEntrada.toEpochDay());
 
-        Reserva reserva = new Reserva(reservaEntradaDto, usuario,habitacion, precioTotal);
+        Reserva reserva = new Reserva(reservaEntradaDto, usuario, habitacion, precioTotal);
 
         ReservaSalidaDto reservaSalidaDto = new ReservaSalidaDto(reservaRepository.save(reserva));
 

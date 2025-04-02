@@ -29,7 +29,7 @@ public class ImagenController {
 
         try {
             Imagen imagen = imagenService.uploadImage(id, file);
-            return ResponseEntity.ok(Map.of("url", imagen.getUrl()));
+            return ResponseEntity.ok(Map.of("url", imagen.getUrl(), "id", String.valueOf(imagen.getId())));
         } catch (Exception e) {
             return ResponseEntity.status(500).body(Map.of("Error al subir la imagen", e.getMessage()));
         }

@@ -23,6 +23,8 @@ public class UserController implements UserApi {
 
     @Override
     public ResponseEntity<Usuario> deleteUser(UserInfoRequest userInfoRequest) {
+        userService.deleteUser(userInfoRequest);
+
         return ResponseEntity.noContent().build();
     }
 

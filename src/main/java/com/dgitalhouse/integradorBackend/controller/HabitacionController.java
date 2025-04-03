@@ -87,7 +87,7 @@ public class HabitacionController {
         return ResponseEntity.ok(habitacionSalidaDto);
     }
 
-   @GetMapping("/buscar")
+   @PostMapping("/buscar")
     @PreAuthorize("permitAll()")
     public ResponseEntity<List<HabitacionSalidaDto>> buscarHabitacionesPorNombreyFechas(@RequestBody ConsultaPorFechaYNombre consultaPorFechaYNombre) {
        System.out.println(consultaPorFechaYNombre.entrada());

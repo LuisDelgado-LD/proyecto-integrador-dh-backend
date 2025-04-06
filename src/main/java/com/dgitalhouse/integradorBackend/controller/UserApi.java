@@ -1,6 +1,7 @@
 package com.dgitalhouse.integradorBackend.controller;
 
 import com.dgitalhouse.integradorBackend.DTO.userDTOS.UpdateUserRequest;
+import com.dgitalhouse.integradorBackend.DTO.userDTOS.UpdateUserRol;
 import com.dgitalhouse.integradorBackend.DTO.userDTOS.UserInfoRequest;
 import com.dgitalhouse.integradorBackend.entity.Usuario;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -22,9 +23,16 @@ public interface UserApi {
             @RequestBody UserInfoRequest userInfoRequest
             );
 
-    @PutMapping()
+    @PutMapping(value="/updateUser")
     ResponseEntity<Usuario>updateUser(
             @RequestAttribute("X-User-Id") Long Id,
             @RequestBody UpdateUserRequest updateUserRequest
             );
+
+    @PutMapping(value="/updateRol/{Id}")
+    ResponseEntity<Usuario>updateRol(
+            @PathVariable Long Id,
+            @RequestBody UpdateUserRol updateUserRol
+            );
+
 }

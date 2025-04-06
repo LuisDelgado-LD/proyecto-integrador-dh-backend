@@ -1,6 +1,7 @@
 package com.dgitalhouse.integradorBackend.service.Impl;
 
 import com.dgitalhouse.integradorBackend.DTO.userDTOS.UpdateUserRequest;
+import com.dgitalhouse.integradorBackend.DTO.userDTOS.UpdateUserRol;
 import com.dgitalhouse.integradorBackend.DTO.userDTOS.UserInfoRequest;
 import com.dgitalhouse.integradorBackend.entity.Usuario;
 import com.dgitalhouse.integradorBackend.repository.UsuarioRepository;
@@ -42,9 +43,30 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
+    @Override
+    public UpdateUserRol updateRol(Long Id, UpdateUserRol updateUserRol) {
+        Optional.of(Id)
+                .map(this::getUser)
+                .map(existingUser -> updateUserRolFields(existingUser, updateUserRol))
+                .map(usuarioRepository :: save)
+                .orElseThrow(() -> new RuntimeException("No se pudo actualizar al usuario."));
+        return null;
+
+    }
+
+    private Usuario updateUserRolFields(Usuario existingUser, UpdateUserRol updateUserRol) {
+        existingUser.setRol(updateUserRol.getRol());
+        return existingUser;
+    }
+
     private Usuario updateUserFields(Usuario existingUser, UpdateUserRequest updateUserRequest) {
 
-        existingUser.setRol(updateUserRequest.getRol());
+        existingUser.setNombre(updateUserRequest.getNombre());
+        existingUser.setApellido(updateUserRequest.getApellido());
+        existingUser.setEmail(updateUserRequest.getEmail());
+        existingUser.setTelefono(updateUserRequest.getTelefono());
+        existingUser.setDireccion(updateUserRequest.getDireccion());
+
         return existingUser;
     }
 

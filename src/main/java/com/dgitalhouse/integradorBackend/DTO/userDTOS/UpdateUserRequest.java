@@ -16,9 +16,12 @@ import lombok.*;
 @Builder
 public class UpdateUserRequest {
 
+    private String nombre;
+    private String apellido;
+    private String email;
+    private String telefono;
+    private String direccion;
 
-    @Enumerated(EnumType.STRING)
-    private Rol rol;
 
 }
 
